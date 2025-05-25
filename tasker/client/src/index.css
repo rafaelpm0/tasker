@@ -5,18 +5,14 @@
 }
 @plugin "daisyui/theme" {
   name: "light";
-  default: true;
   color-scheme: light;
-
   --color-header: #0E1B6B;
   --color-navbar: #131C55;
 }
 
 @plugin "daisyui/theme" {
   name: "dark";
-  prefersdark: true;
   color-scheme: dark;
-  
   --color-header: #0E1B6B;
   --color-navbar: #131C55;
 }
@@ -35,6 +31,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 
 
 body {
