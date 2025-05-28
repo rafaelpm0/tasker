@@ -1,3 +1,4 @@
+import TypeForm from "../components/form/typeForm";
 import BreadCrumb from "../components/ui/breadCrumb";
 import Modal from "../components/ui/modal";
 import Table, {type Column} from "../components/ui/table";
@@ -43,7 +44,7 @@ function TypeService() {
       <h1 className="text-primary text-center text-4xl my-6">Cadastrar tipo de Serviço</h1>
       <div className="flex justify-end w-full mb-4 pr-4">
         <Modal id={"modalTypeService"} buttonLabel={"Cadastrar"}>
-          <p>Modal content goes here</p>
+          <TypeForm/>
         </Modal>
       </div>
       <Table<TypeService>
