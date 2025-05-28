@@ -1,7 +1,8 @@
 import BreadCrumb from "../components/ui/breadCrumb";
-import Table from "../components/ui/table";
+import Table, {type Column} from "../components/ui/table";
 import { useGetTypeServiceQuery, useDeleteTypeServiceMutation } from "../services/endpoints/tasker";
-import type { Column, Service } from "../types/types";
+import type { TypeService } from "../types/types";
+
 
 function TypeService() {
   const {
@@ -9,13 +10,24 @@ function TypeService() {
     isLoading: isLoadingTypeService,
     refetch
   } = useGetTypeServiceQuery({});
-
+  const data = typeServices || [];
   const [deleteTypeService, { isLoading: isLoadingDelete, isError, isSuccess }] = useDeleteTypeServiceMutation();
   
-  const serviceColumns: Column<Service>[] = [
-    { label: "Título", accessor: "title" },
-    { label: "Descrição", accessor: "description" },
-    { label: "Valor/Hora", accessor: "hourRate" },
+  const serviceColumns: Column<TypeService>[] = [
+    { header: "Título", accessor: "title" },
+    { header: "Descrição", accessor: "description" },
+    { header: "Valor/Hora", accessor: "hourRate" },
+    { header: "", accessor: "id", render: (value, rowData: TypeService) => (
+        <div className="flex gap-2">
+          <button
+            className="btn btn-error btn-sm"
+            onClick={() => handleDelete(rowData.id)}
+            disabled={isLoadingDelete}
+          >
+            Excluir
+          </button>
+        </div>
+      ) }
   ];
 
   const handleDelete = async (id: number) => {
@@ -24,17 +36,16 @@ function TypeService() {
   }
 
   return (
-    <main className="w-full bg-base-300">
+    <>
       <BreadCrumb />
-      <h1 className="text-primary mt-6">Cadastrar tipo de Serviço</h1>
-      <Table
+      <h1 className="text-primary text-center text-4xl my-6">Cadastrar tipo de Serviço</h1>
+      <Table<TypeService>
         columns={serviceColumns}
-        data={typeServices}
-        handleDelete={handleDelete}
+        data={data}
         isLoading={isLoadingTypeService}
-        loadingDelete={null}
+
       />
-    </main>
+    </>
   );
 }
 

@@ -26,7 +26,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
-    "prepare:dev": "npx prisma generate && npx prisma migrate",
+    "prepare:dev": "npx prisma generate && npx prisma migrate dev",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",

@@ -36,11 +36,19 @@
   color: inherit;
 }
 
+
 .drawer-button:hover,
 .drawer-button:focus {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+#navar {
+  height: 100%;
+}
+
 #navbar-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   background-image: url('../assets/pattern_hexagon.svg');
 }

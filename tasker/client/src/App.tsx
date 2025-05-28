@@ -8,10 +8,13 @@ function App() {
   return (
     <>
     <Header/>
-    <Routes>
+    <main className="w-[calc(100%-48px)] bg-base-300 pb-4 overflow-w-hidden">
+     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/tipo-servico" element={<TypeService />} />
     </Routes>
+    </main>
+   
     </>
     
   )
