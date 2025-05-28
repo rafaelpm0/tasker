@@ -1,4 +1,5 @@
 import BreadCrumb from "../components/ui/breadCrumb";
+import Modal from "../components/ui/modal";
 import Table, {type Column} from "../components/ui/table";
 import { useGetTypeServiceQuery, useDeleteTypeServiceMutation } from "../services/endpoints/tasker";
 import type { TypeService } from "../types/types";
@@ -40,6 +41,11 @@ function TypeService() {
     <>
       <BreadCrumb />
       <h1 className="text-primary text-center text-4xl my-6">Cadastrar tipo de Serviço</h1>
+      <div className="flex justify-end w-full mb-4 pr-4">
+        <Modal id={"modalTypeService"} buttonLabel={"Cadastrar"}>
+          <p>Modal content goes here</p>
+        </Modal>
+      </div>
       <Table<TypeService>
         columns={serviceColumns}
         data={data}
