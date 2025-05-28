@@ -35,7 +35,7 @@ function Header() {
             <li>
               <a href="/cadastrar-cliente" className="drawer-button">
                 <img
-                  src="../assets/client.svg"
+                  src="../assets/client.png"
                   alt="Cadastrar cliente"
                   className="h-8 w-8"
                 />
