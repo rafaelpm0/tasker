@@ -43,8 +43,8 @@ export function Table<T extends Record<string, any>>({
 
   return (
     <div className="w-full sm:px-4">
-      <div className="card bg-base-100 shadow-xl">
-        <div className="overflow-x-auto">
+      <div className="card bg-base-100 shadow-xl overflow-x-auto">
+        <div className="">
           <table className="table table-zebra">
             <thead className="bg-base-200">
               <tr>

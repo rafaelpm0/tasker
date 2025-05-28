@@ -14,7 +14,18 @@ export const taskerApi = api.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    getServices: builder.query({
+      query: () => ({
+        url: '/service',
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useGetTypeServiceQuery, useDeleteTypeServiceMutation, useGetClientQuery } = taskerApi
+export const {
+  useGetTypeServiceQuery,
+  useDeleteTypeServiceMutation,
+  useGetClientQuery,
+  useGetServicesQuery
+} = taskerApi;

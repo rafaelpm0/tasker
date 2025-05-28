@@ -29,7 +29,6 @@ let ServiceService = class ServiceService {
                 typeService: true,
             },
         });
-        console.log(JSON.stringify(result, null, 2));
         return result;
     }
     async findOne(id) {

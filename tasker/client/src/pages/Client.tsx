@@ -39,7 +39,7 @@ function Clients() {
   return (
     <>
       <BreadCrumb />
-      <h1 className="text-primary text-center text-4xl my-6">Cadastrar Cliente</h1>
+      <h1 className="text-primary text-center text-4xl py-6">Cadastrar Cliente</h1>
       <Table<Client>
         columns={serviceColumns}
         data={data}
