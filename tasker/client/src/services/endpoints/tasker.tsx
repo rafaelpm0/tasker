@@ -14,6 +14,18 @@ export const taskerApi = api.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    deleteService: builder.mutation({
+      query: (id: number) => ({
+        url: `/service/${id}`,
+        method: 'DELETE',
+      }),
+    }),
+    deleteClient: builder.mutation({
+      query: (id: number) => ({
+        url: `/clients/${id}`,
+        method: 'DELETE',
+      }),
+    }),
     getServices: builder.query({
       query: () => ({
         url: '/service',
@@ -27,5 +39,7 @@ export const {
   useGetTypeServiceQuery,
   useDeleteTypeServiceMutation,
   useGetClientQuery,
-  useGetServicesQuery
+  useGetServicesQuery,
+  useDeleteClientMutation,
+  useDeleteServiceMutation
 } = taskerApi;

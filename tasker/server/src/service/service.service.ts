@@ -50,6 +50,7 @@ async findAll() {
 
   async remove(id: number) {
     try {
+      console.log('Removendo serviço com ID:', id);
       return await this.prisma.service.delete({
         where: { id },
       });

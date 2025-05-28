@@ -1,6 +1,6 @@
 import BreadCrumb from "../components/ui/breadCrumb";
 import Table, {type Column} from "../components/ui/table";
-import { useGetClientQuery, useDeleteTypeServiceMutation } from "../services/endpoints/tasker";
+import { useGetClientQuery, useDeleteClientMutation } from "../services/endpoints/tasker";
 import type { Client } from "../types/types";
 
 
@@ -12,9 +12,10 @@ function Clients() {
     refetch
   } = useGetClientQuery({});
   const data = typeServices || [];
-  const [deleteTypeService, { isLoading: isLoadingDelete, isError, isSuccess }] = useDeleteTypeServiceMutation();
+  const [deleteClient, { isLoading: isLoadingDelete, isError, isSuccess }] = useDeleteClientMutation();
   
   const serviceColumns: Column<Client>[] = [
+    { header: "Identificador", accessor: "id" },
     { header: "Título", accessor: "name" },
     { header: "E-mail", accessor: "email" },
     { header: "Telefone", accessor: "phone" },
@@ -32,7 +33,7 @@ function Clients() {
   ];
 
   const handleDelete = async (id: number) => {
-    await deleteTypeService( id )
+    await deleteClient( id )
     await refetch();
   }
 

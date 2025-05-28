@@ -14,6 +14,7 @@ function TypeService() {
   const [deleteTypeService, { isLoading: isLoadingDelete, isError, isSuccess }] = useDeleteTypeServiceMutation();
   
   const serviceColumns: Column<TypeService>[] = [
+    { header: "Identificador", accessor: "id" },
     { header: "Título", accessor: "title" },
     { header: "Descrição", accessor: "description" },
     { header: "Valor/Hora", accessor: "hourRate" },

@@ -1,6 +1,6 @@
 import BreadCrumb from "../components/ui/breadCrumb";
 import Table, {type Column} from "../components/ui/table";
-import { useDeleteTypeServiceMutation, useGetServicesQuery } from "../services/endpoints/tasker";
+import { useDeleteServiceMutation, useGetServicesQuery } from "../services/endpoints/tasker";
 import type { Service } from "../types/types";
 
 
@@ -17,21 +17,27 @@ function Services() {
     'typeService_title': service.typeService?.title,
     'hourRate': service.typeService?.hourRate,
   })) || [];
-  const [deleteTypeService, { isLoading: isLoadingDelete, isError, isSuccess }] = useDeleteTypeServiceMutation();
-  
+  const [deleteService, { isLoading: isLoadingDelete, isError, isSuccess }] = useDeleteServiceMutation();
+
+
   const serviceColumns: Column<Service>[] = [
     { header: "Identificação", accessor: "id" },
     { header: "Tipo de serviço", accessor: "typeService_title" },
     { header: "Id Client", accessor: "type_serv_id" },
     { header: "Cliente", accessor: "client_name" },
     { header: "Descrição", accessor: "description" },
-    { header: "Horas de execução", accessor: "qtn_min" },
+    { header: "Horas de execução", accessor: "qtn_min", 
+      render: (_lineData:any, rowData: Service) => {
+      const total = (rowData?.qtn_min/60);
+      return <span className="text-primary font-bold">{total.toFixed(2)}</span>;
+    } },
     {
-      header: "Custo por hora", accessor: "hourRate"
+      header: "Custo por hora", accessor: "hourRate",
+      
     },
     {
       header: "Valor Total:", accessor: "", render: (_lineData:any, rowData: Service) => {
-        const total = rowData?.qtn_min * rowData?.hourRate;
+        const total = (rowData?.qtn_min/60) * rowData?.hourRate;
         return <span className="text-primary font-bold">{total.toFixed(2)}</span>;
       }
     },
@@ -41,7 +47,7 @@ function Services() {
         <div className="flex gap-2">
           <button
             className="btn btn-error btn-sm"
-            onClick={() => console.log(rowData.id)}
+            onClick={() => handleDelete(rowData.id)}
             disabled={isLoadingDelete}
           >
             Excluir
@@ -53,7 +59,7 @@ function Services() {
     ]
 
   const handleDelete = async (id: number) => {
-    await deleteTypeService( id )
+    await deleteService(id)
     await refetch();
   }
 
