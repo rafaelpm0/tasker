@@ -1,6 +1,24 @@
+import React, { useState, useEffect } from "react";
 import "./header.css";
 
 function Header() {
+  const [theme, setTheme] = useState("light");
+
+  // Carregar o tema do localStorage ao montar o componente
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }, []);
+
+  // Alternar o tema e salvar no localStorage
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+  };
+
   return (
     <header
       className="h-full"
@@ -18,7 +36,7 @@ function Header() {
         className="drawer-label-custom drawer-button p-2 w-auto"
       >
         <img src="../assets/logo.svg" alt="Logo" className="h-8 w-8" />
-        <span className="drawer-toggle-text-custom">Tasker</span>
+        <span className="drawer-toggle-text-custom text-[#fff]">Tasker</span>
       </label>
 
       {/* Drawer */}
@@ -39,19 +57,19 @@ function Header() {
                   alt="Cadastrar cliente"
                   className="h-8 w-8"
                 />
-                <span className="drawer-toggle-text-custom">
+                <span className="drawer-toggle-text-custom text-[#fff]">
                   Cadastrar cliente
                 </span>
               </a>
             </li>
             <li>
-              <a href="/about" className="drawer-button">
+              <a href="/tipo-servico" className="drawer-button">
                 <img
                   src="../assets/service.svg"
                   alt="Tipo de serviço"
                   className="h-8 w-8"
                 />
-                <span className="drawer-toggle-text-custom">
+                <span className="drawer-toggle-text-custom text-[#fff]">
                   Cad. tipo de serviço
                 </span>
               </a>
@@ -63,7 +81,7 @@ function Header() {
                   alt="Serviços agendados"
                   className="h-8 w-8"
                 />
-                <span className="drawer-toggle-text-custom">
+                <span className="drawer-toggle-text-custom text-[#fff]">
                   Serviços agendados
                 </span>
               </a>
@@ -73,10 +91,15 @@ function Header() {
 
         {/* Botão de troca de tema */}
         <label className="swap swap-rotate mb-2">
-          <input type="checkbox" className="theme-controller" value="dark" />
+          <input
+            type="checkbox"
+            className="theme-controller"
+            checked={theme === "dark"}
+            onChange={toggleTheme}
+          />
 
           <svg
-            className="swap-off h-10 w-10 fill-current"
+            className="swap-off h-10 w-10 fill-[#fff]"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
           >
@@ -84,7 +107,7 @@ function Header() {
           </svg>
 
           <svg
-            className="swap-on h-10 w-10 fill-current"
+            className="swap-on h-10 w-10 fill-[#fff]"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
           >

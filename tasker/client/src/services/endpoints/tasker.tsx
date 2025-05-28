@@ -1,13 +1,17 @@
 import { api } from '../api'
 
-
 export const taskerApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getCorreio: builder.query({
-      query: () => '/01001000/json',
+    getTypeService: builder.query({
+      query: () => '/type-service',
     }),
-    // ...outros endpoints relacionados a usuários
+    deleteTypeService: builder.mutation({
+      query: (id: number) => ({
+        url: `/type-service/${id}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
-})
+});
 
-export const { useGetCorreioQuery } = taskerApi
+export const { useGetTypeServiceQuery, useDeleteTypeServiceMutation } = taskerApi
