@@ -6,3 +6,11 @@ export type TypeService = {
     hourRate: number;
   };
     
+
+export type Client = {
+    id: number;
+    name: string,
+    email: string,
+    phone: string,
+    extra: string
+  } 

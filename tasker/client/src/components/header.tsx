@@ -62,7 +62,7 @@ function Header() {
               </a>
             </li>
             <li>
-              <a href="/tipo-servico" className="drawer-button">
+              <a href="/cadastrar-tipo-servico" className="drawer-button">
                 <img
                   src="../assets/service.svg"
                   alt="Tipo de serviço"
@@ -74,7 +74,7 @@ function Header() {
               </a>
             </li>
             <li>
-              <a href="/contact" className="drawer-button">
+              <a href="/servicos-agendados" className="drawer-button">
                 <img
                   src="../assets/work.svg"
                   alt="Serviços agendados"

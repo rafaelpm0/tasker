@@ -42,7 +42,7 @@ export function Table<T extends Record<string, any>>({
   }
 
   return (
-    <div className="w-full px-4">
+    <div className="w-full sm:px-4">
       <div className="card bg-base-100 shadow-xl">
         <div className="overflow-x-auto">
           <table className="table table-zebra">

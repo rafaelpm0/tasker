@@ -5,6 +5,9 @@ export const taskerApi = api.injectEndpoints({
     getTypeService: builder.query({
       query: () => '/type-service',
     }),
+    getClient: builder.query({
+      query: () => '/clients',
+    }),
     deleteTypeService: builder.mutation({
       query: (id: number) => ({
         url: `/type-service/${id}`,
@@ -14,4 +17,4 @@ export const taskerApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetTypeServiceQuery, useDeleteTypeServiceMutation } = taskerApi
+export const { useGetTypeServiceQuery, useDeleteTypeServiceMutation, useGetClientQuery } = taskerApi

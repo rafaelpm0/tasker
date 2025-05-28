@@ -14,11 +14,16 @@ export class ServiceService {
     });
   }
 
-  async findAll() {
-    return this.prisma.service.findMany({
-      orderBy: { id: 'asc' },
-    });
-  }
+async findAll() {
+  const result = await this.prisma.service.findMany({
+    orderBy: { id: 'asc' },
+    include: {
+      client: true,
+      typeService: true,
+    },
+  });
+  return result;
+}
 
   async findOne(id: number) {
     const service = await this.prisma.service.findUnique({
@@ -34,7 +39,7 @@ export class ServiceService {
 
   async update(id: number, updateServiceDto: UpdateServiceDto) {
     try {
-      return await this.prisma.client.update({
+      return await this.prisma.service.update({
         where: { id },
         data: updateServiceDto,
       });

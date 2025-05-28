@@ -11,13 +11,31 @@ export declare class ServiceController {
         description: string;
         qtn_min: number;
     }>;
-    findAll(): Promise<{
+    findAll(): Promise<({
+        typeService: {
+            id: number;
+            description: string | null;
+            title: string;
+            hourRate: number;
+            createdAt: Date;
+            updatedAt: Date;
+        };
+        client: {
+            id: number;
+            name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            email: string;
+            phone: string;
+            extra: string | null;
+        };
+    } & {
         id: number;
         type_serv_id: number;
         client_id: number;
         description: string;
         qtn_min: number;
-    }[]>;
+    })[]>;
     findOne(id: string): Promise<{
         id: number;
         type_serv_id: number;
@@ -27,12 +45,10 @@ export declare class ServiceController {
     }>;
     update(id: string, updateClientDto: UpdateServiceDto): Promise<{
         id: number;
-        name: string;
-        email: string;
-        phone: string;
-        extra: string | null;
-        createdAt: Date;
-        updatedAt: Date;
+        type_serv_id: number;
+        client_id: number;
+        description: string;
+        qtn_min: number;
     }>;
     remove(id: string): Promise<{
         id: number;
