@@ -1,3 +1,4 @@
+import ServiceForm from "../components/form/serviceForm";
 import BreadCrumb from "../components/ui/breadCrumb";
 import Table, {type Column} from "../components/ui/table";
 import { useDeleteServiceMutation, useGetServicesQuery } from "../services/endpoints/tasker";
@@ -28,7 +29,7 @@ function Services() {
     { header: "Descrição", accessor: "description" },
     { header: "Horas de execução", accessor: "qtn_min", 
       render: (_lineData:any, rowData: Service) => {
-      const total = (rowData?.qtn_min/60);
+      const total = (rowData?.qtn_min);
       return <span className="text-primary font-bold">{total.toFixed(2)}</span>;
     } },
     {
@@ -37,7 +38,7 @@ function Services() {
     },
     {
       header: "Valor Total:", accessor: "", render: (_lineData:any, rowData: Service) => {
-        const total = (rowData?.qtn_min/60) * rowData?.hourRate;
+        const total = rowData?.qtn_min * rowData?.hourRate;
         return <span className="text-primary font-bold">{total.toFixed(2)}</span>;
       }
     },
@@ -67,6 +68,12 @@ function Services() {
     <>
       <BreadCrumb />
       <h1 className="text-primary text-center text-4xl my-6">Serviços agendados</h1>
+            <div className="flex justify-end w-full mb-4 pr-4">
+
+        <ServiceForm
+          afterPost={refetch} />
+
+      </div>
       <Table<Service>
         columns={serviceColumns}
         data={data}

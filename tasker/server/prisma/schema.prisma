@@ -23,7 +23,7 @@ model TypeService {
 model Client {
   id        Int       @id @default(autoincrement())
   name      String // Nome do cliente
-  email     String    @unique // Email único do cliente
+  email     String   
   phone     String // Telefone do cliente
   extra     String? // Informações adicionais (opcional)
   createdAt DateTime  @default(now()) // Data de criação automática
