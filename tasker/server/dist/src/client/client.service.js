@@ -23,7 +23,7 @@ let ClientService = class ClientService {
     }
     async findAll() {
         return this.prisma.client.findMany({
-            orderBy: { name: 'asc' },
+            orderBy: { id: 'asc' },
         });
     }
     async findOne(id) {

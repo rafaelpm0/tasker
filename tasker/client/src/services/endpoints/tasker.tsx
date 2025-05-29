@@ -46,6 +46,13 @@ export const taskerApi = api.injectEndpoints({
         body,
       }),
     }),
+    postService: builder.mutation({
+      query: (body) => ({
+        url: `/service`,
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 });
 
@@ -58,4 +65,5 @@ export const {
   useDeleteServiceMutation,
   usePostTypeClientMutation,
   usePostClientMutation,
+  usePostServiceMutation,
 } = taskerApi;

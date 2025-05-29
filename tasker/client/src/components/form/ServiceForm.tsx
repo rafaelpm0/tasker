@@ -1,13 +1,15 @@
 import { useForm } from "react-hook-form";
-import type { Service, TypeService } from "../../types/types";
-import { useGetClientQuery, useGetTypeServiceQuery, usePostClientMutation } from "../../services/endpoints/tasker";
-import Modal, {closeModal} from "../ui/modal";
-
-
+import type { Service, Client, TypeService } from "../../types/types";
+import {
+  useGetClientQuery,
+  useGetTypeServiceQuery,
+  usePostServiceMutation,
+} from "../../services/endpoints/tasker";
+import Modal, { closeModal } from "../ui/modal";
 
 function ServiceForm({ afterPost }: { afterPost?: () => void }) {
-  const [postClient] = usePostClientMutation();
- 
+  const [postService] = usePostServiceMutation();
+
   const {
     register,
     handleSubmit,
@@ -16,20 +18,20 @@ function ServiceForm({ afterPost }: { afterPost?: () => void }) {
 
   const onSubmit = async (data: Service) => {
     const newData = {
-      ...data
+      ...data,
+      type_serv_id: Number(data.type_serv_id),
+      client_id: Number(data.client_id),
+      qtn_min: Number(data.qtn_min),
     };
-    await postClient(newData);
-    closeModal("modalClient")
+    await postService(newData);
+    closeModal("modalClient");
     afterPost?.();
   };
 
-
   //select dos clientes
-    const { data: clients } = useGetClientQuery({});
+  const { data: clients } = useGetClientQuery({});
   //select dos tipos de serviço
-    const { data: typeServices } = useGetTypeServiceQuery({});
-
-    console.log("bla",clients, typeServices);
+  const { data: typeServices } = useGetTypeServiceQuery({});
 
   return (
     <div>
@@ -37,71 +39,82 @@ function ServiceForm({ afterPost }: { afterPost?: () => void }) {
         <h1>Cadastro de tipo de serviço</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control flex flex-col">
-             <label className="label">
+            <label className="label">
+              <span className="label-text">Tipo de serviço:</span>
+            </label>
+            <select
+              id="type_serv_id"
+              className="select select-bordered w-full max-w-xs"
+              {...register("type_serv_id", { required: true })}
+            >
+              <option value="" disabled selected>
+                Selecione um tipo de serviço
+              </option>
+              {typeServices?.map((typeService: TypeService) => (
+                <option key={typeService.id} value={typeService.id}>
+                  {`${typeService.id} - ${typeService.title}`}
+                </option>
+              ))}
+            </select>
+
+            {errors.type_serv_id && (
+              <span className="label-text-alt text-error">
+                Selecionar um tipo de serviço é obrigatório
+              </span>
+            )}
+
+            <label className="label">
               <span className="label-text">Cliente:</span>
             </label>
-            <select id="type_serv_id" className="select select-bordered w-full max-w-xs" {...register("type_serv_id", { required: true })}>
-                {
-                typeServices?.map((typeService: TypeService) => (
-                  <option key={typeService.id} value={typeService.id}>
-                    {`${typeService.id} - ${typeService.title}`}
-                  </option>
-                ))
-                }
+            <select
+              id="client_id"
+              className="select select-bordered w-full max-w-xs"
+              {...register("client_id", { required: true })}
+            >
+              <option value="" disabled selected>
+                Selecione um cliente
+              </option>
+              {clients?.map((client: Client) => (
+                <option key={client.id} value={client.id}>
+                  {`${client.id} - ${client.name}`}
+                </option>
+              ))}
             </select>
-            
-            {errors.type_serv_id && (
+
+            {errors.client_id && (
               <span className="label-text-alt text-error">
                 Selecionar um cliente é obrigatório
               </span>
-            )} 
+            )}
 
-
-            {/* <label className="label">
-              <span className="label-text">E-mail:</span>
+            <label className="label">
+              <span className="label-text">Descrição:</span>
             </label>
             <input
-              type="email" // Alterado para type="email"
-              placeholder="Digite seu e-mail"
+              type="text"
+              placeholder="Escreva a descrição"
               className="input input-bordered"
-              {...register("email", { 
-                required: true,
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "E-mail inválido"
-                }
-              })}
+              {...register("description", { required: true })}
             />
-            {errors.email && (
+            {errors.description && (
               <span className="label-text-alt text-error">
-                {errors.email.type === 'required' 
-                  ? 'E-mail é obrigatório' 
-                  : 'E-mail inválido'}
+                Descrição é obrigatória
               </span>
-            )} */}
-        
-            {/* <label className="label">
-              <span className="label-text">Telefone:</span>
+            )}
+              <label className="label">
+              <span className="label-text">Quantidade de horas:</span>
             </label>
             <input
-              type="tel"
-              placeholder="Digite seu telefone"
+              type="number"
+              placeholder="Informe o numero de horas gastas"
               className="input input-bordered"
-              {...register("phone", { 
-                required: true,
-                pattern: {
-                  value: /^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}-[0-9]{4}$/,
-                  message: "Telefone inválido"
-                }
-              })}
+              {...register("qtn_min", { required: true })}
             />
-            {errors.phone && (
+            {errors.qtn_min && (
               <span className="label-text-alt text-error">
-                {errors.phone.type === 'required' 
-                  ? 'Telefone é obrigatório' 
-                  : 'Formato inválido. Use (99) 99999-9999'}
+                Valor Hora é obrigatório
               </span>
-            )} */}
+            )}
           </div>
           <button type="submit" className="btn btn-primary mt-4">
             Enviar
@@ -113,4 +126,3 @@ function ServiceForm({ afterPost }: { afterPost?: () => void }) {
 }
 
 export default ServiceForm;
-
