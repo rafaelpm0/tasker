@@ -3,6 +3,7 @@ import BreadCrumb from "../components/ui/breadCrumb";
 import Table, { type Column } from "../components/ui/table";
 import { useGetClientQuery, useDeleteClientMutation } from "../services/endpoints/tasker";
 import type { Client } from "../types/types";
+import {showSuccess } from '../components/ui/toast';
 
 
 
@@ -37,7 +38,9 @@ function Clients() {
 
   const handleDelete = async (id: number) => {
     await deleteClient(id)
+    showSuccess("Cliente excluído com sucesso!");
     await refetch();
+    
   }
 
   return (

@@ -12,22 +12,22 @@ export declare class ServiceService {
         qtn_min: number;
     }>;
     findAll(): Promise<({
-        typeService: {
-            id: number;
-            description: string | null;
-            title: string;
-            hourRate: number;
-            createdAt: Date;
-            updatedAt: Date;
-        };
         client: {
             id: number;
             name: string;
-            createdAt: Date;
-            updatedAt: Date;
             email: string;
             phone: string;
             extra: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+        };
+        typeService: {
+            id: number;
+            createdAt: Date;
+            updatedAt: Date;
+            description: string | null;
+            title: string;
+            hourRate: number;
         };
     } & {
         id: number;

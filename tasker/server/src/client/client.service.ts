@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ClientService {
@@ -48,6 +49,13 @@ export class ClientService {
         where: { id },
       });
     } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2003') {
+          throw new BadRequestException(
+            `Não é possível remover o cliente com ID ${id} porque ele está sendo referenciado por outro registro.`
+          );
+        }
+      }
       throw new NotFoundException(`Cliente com ID ${id} não encontrado`);
     }
   }

@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateTypeServiceDto } from './dto/create-typeService.dto';
 import { UpdateTypeServiceDto } from './dto/update-typeService.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class TypeServiceService {
@@ -48,6 +49,13 @@ export class TypeServiceService {
         where: { id },
       });
     } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2003') {
+          throw new BadRequestException(
+            `Não é possível remover o tipo de serviço com ID ${id} porque ele está sendo referenciado por outro registro.`
+          );
+        }
+      }
       throw new NotFoundException(`Tipo de serviço com ID ${id} não encontrado`);
     }
   }

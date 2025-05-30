@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ServiceService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../../prisma/prisma.service");
+const client_1 = require("@prisma/client");
 let ServiceService = class ServiceService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -58,6 +59,11 @@ let ServiceService = class ServiceService {
             });
         }
         catch (error) {
+            if (error instanceof client_1.Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2003') {
+                    throw new common_1.BadRequestException(`Não é possível remover o serviço com ID ${id} porque ele está sendo referenciado por outro registro.`);
+                }
+            }
             throw new common_1.NotFoundException(`Serviço com ID ${id} não encontrado`);
         }
     }
