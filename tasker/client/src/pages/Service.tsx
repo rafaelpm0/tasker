@@ -1,10 +1,9 @@
 import ServiceForm from "../components/form/serviceForm";
 import BreadCrumb from "../components/ui/breadCrumb";
 import Table, {type Column} from "../components/ui/table";
+import { showError, showSuccess } from "../components/ui/toast";
 import { useDeleteServiceMutation, useGetServicesQuery } from "../services/endpoints/tasker";
 import type { Service } from "../types/types";
-
-
 
 function Services() {
   const {
@@ -19,7 +18,6 @@ function Services() {
     'hourRate': service.typeService?.hourRate,
   })) || [];
   const [deleteService, { isLoading: isLoadingDelete, isError, isSuccess }] = useDeleteServiceMutation();
-
 
   const serviceColumns: Column<Service>[] = [
     { header: "Identificação", accessor: "id" },
@@ -59,14 +57,24 @@ function Services() {
     }
     ]
 
-  const handleDelete = async (id: number) => {
-    await deleteService(id)
-    await refetch();
-  }
+    const handleDelete = async (id: number) => {
+      try {
+        const response = await deleteService(id);
+        if (!response.error) {
+          showSuccess("Serviço excluído com sucesso!");
+          await refetch();
+        } else {
+          showError(response?.error?.data?.message);
+        }
+      } catch (error) {
+        console.error("Erro ao excluir serviço:", error);
+        showError("Não foi possível excluir o serviço. Tente novamente.");
+      }
+    };
 
   return (
     <>
-      <BreadCrumb />
+      
       <h1 className="text-primary text-center text-4xl my-6">Serviços agendados</h1>
             <div className="flex justify-end w-full mb-4 pr-4">
 

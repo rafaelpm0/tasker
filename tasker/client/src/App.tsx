@@ -5,12 +5,14 @@ import './App.css'
 import TypeService from './pages/TypeService'
 import Clients from './pages/Client'
 import Services from './pages/Service'
+import BreadCrumb from './components/ui/breadCrumb'
 
 function App() {
   return (
     <>
     <Header/>
-    <main className="w-[calc(100%-48px)] bg-base-300 pb-4 overflow-w-hidden ">
+    <main className="flex flex-col w-[calc(100%-48px)] min-h-screen bg-base-300 overflow-w-hidden ">
+    <BreadCrumb />
      <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/cadastrar-tipo-servico" element={<TypeService />} />

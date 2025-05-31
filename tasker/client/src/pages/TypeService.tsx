@@ -1,6 +1,7 @@
 import TypeForm from "../components/form/typeForm";
 import BreadCrumb from "../components/ui/breadCrumb";
 import Table, { type Column } from "../components/ui/table";
+import { showError, showSuccess } from "../components/ui/toast";
 import { useGetTypeServiceQuery, useDeleteTypeServiceMutation } from "../services/endpoints/tasker";
 import type { TypeService } from "../types/types";
 
@@ -36,13 +37,24 @@ function TypeService() {
 
 
   const handleDelete = async (id: number) => {
-    await deleteTypeService(id)
-    await refetch();
-  }
+    try {
+      const response = await deleteTypeService(id);
+      console.log(response)
+      if (!response.error) {
+        showSuccess("Tipo de serviço excluído com sucesso!");
+        await refetch();
+      } else {
+        showError(response?.error?.data?.message);
+      }
+    } catch (error) {
+      console.error("Erro ao excluisdr tipo de serviço:", error);
+      showError("Não foi possível excluir o tipo de serviço. Tente novamente.");
+    }
+  };
 
   return (
     <>
-      <BreadCrumb />
+     
       <h1 className="text-primary text-center text-4xl my-6">Cadastrar tipo de Serviço</h1>
       <div className="flex justify-end w-full mb-4 pr-4">
 

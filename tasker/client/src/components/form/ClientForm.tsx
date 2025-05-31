@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import type { Client } from "../../types/types";
 import { usePostClientMutation } from "../../services/endpoints/tasker";
 import Modal, {closeModal} from "../ui/modal";
+import { showError, showSuccess } from "../ui/toast";
 
 
 
@@ -18,7 +19,14 @@ function ClientForm({ afterPost }: { afterPost?: () => void }) {
     const newData = {
       ...data
     };
-    await postClient(newData);
+    const response = await postClient(newData);
+    if (response.error) {
+      showError("Erro ao cadastrar cliente: " + response.error.data?.message || "Tente novamente mais tarde.");
+      return;
+    }else {
+      showSuccess("Cliente cadastrado com sucesso!");
+    }
+    
     closeModal("modalClient")
     afterPost?.();
   };
@@ -26,7 +34,7 @@ function ClientForm({ afterPost }: { afterPost?: () => void }) {
   return (
     <div>
       <Modal id={"modalClient"} buttonLabel={"Cadastrar"}>
-        <h1>Cadastro de tipo de serviço</h1>
+        <h1>Cadastro de Cliente:</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control flex flex-col">
             <label className="label">

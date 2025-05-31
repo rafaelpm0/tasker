@@ -3,9 +3,7 @@ import BreadCrumb from "../components/ui/breadCrumb";
 import Table, { type Column } from "../components/ui/table";
 import { useGetClientQuery, useDeleteClientMutation } from "../services/endpoints/tasker";
 import type { Client } from "../types/types";
-import {showSuccess } from '../components/ui/toast';
-
-
+import { showSuccess, showError } from '../components/ui/toast';
 
 function Clients() {
   const {
@@ -37,15 +35,24 @@ function Clients() {
   ];
 
   const handleDelete = async (id: number) => {
-    await deleteClient(id)
-    showSuccess("Cliente excluído com sucesso!");
-    await refetch();
-    
-  }
+    try {
+      const response = await deleteClient(id);
+      console.log(response);
+      if (!response.error) {
+        showSuccess("Cliente excluído com sucesso!");
+        await refetch();
+      } else {
+        showError(response?.error?.data?.message);
+      }
+    } catch (error) {
+      console.error("Erro ao excluir cliente:", error);
+      showError("Não foi possível excluir o cliente. Tente novamente.");
+    }
+  };
 
   return (
     <>
-      <BreadCrumb />
+   
       <h1 className="text-primary text-center text-4xl py-6">Cadastrar Cliente</h1>
       <div className="flex justify-end w-full mb-4 pr-4">
 

@@ -6,55 +6,55 @@ export declare class ServiceService {
     constructor(prisma: PrismaService);
     create(createServiceDto: CreateServiceDto): Promise<{
         id: number;
+        description: string;
         type_serv_id: number;
         client_id: number;
-        description: string;
         qtn_min: number;
     }>;
     findAll(): Promise<({
+        typeService: {
+            id: number;
+            title: string;
+            description: string | null;
+            hourRate: number;
+            createdAt: Date;
+            updatedAt: Date;
+        };
         client: {
             id: number;
+            createdAt: Date;
+            updatedAt: Date;
             name: string;
             email: string;
             phone: string;
             extra: string | null;
-            createdAt: Date;
-            updatedAt: Date;
-        };
-        typeService: {
-            id: number;
-            createdAt: Date;
-            updatedAt: Date;
-            description: string | null;
-            title: string;
-            hourRate: number;
         };
     } & {
         id: number;
+        description: string;
         type_serv_id: number;
         client_id: number;
-        description: string;
         qtn_min: number;
     })[]>;
     findOne(id: number): Promise<{
         id: number;
+        description: string;
         type_serv_id: number;
         client_id: number;
-        description: string;
         qtn_min: number;
     }>;
     update(id: number, updateServiceDto: UpdateServiceDto): Promise<{
         id: number;
+        description: string;
         type_serv_id: number;
         client_id: number;
-        description: string;
         qtn_min: number;
     }>;
     remove(id: number): Promise<{
         id: number;
+        description: string;
         type_serv_id: number;
         client_id: number;
-        description: string;
         qtn_min: number;
     }>;
 }

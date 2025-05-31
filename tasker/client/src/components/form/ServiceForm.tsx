@@ -6,6 +6,8 @@ import {
   usePostServiceMutation,
 } from "../../services/endpoints/tasker";
 import Modal, { closeModal } from "../ui/modal";
+import { showError, showSuccess } from "../ui/toast";
+
 
 function ServiceForm({ afterPost }: { afterPost?: () => void }) {
   const [postService] = usePostServiceMutation();
@@ -23,8 +25,20 @@ function ServiceForm({ afterPost }: { afterPost?: () => void }) {
       client_id: Number(data.client_id),
       qtn_min: Number(data.qtn_min),
     };
-    await postService(newData);
-    closeModal("modalClient");
+
+    const response = await postService(newData);
+
+    if (response.error) {
+      showError(
+        "Erro ao cadastrar serviço: " +
+          response.error.data?.message ||
+          "Tente novamente mais tarde."
+      );
+    } else {
+      showSuccess("Serviço cadastrado com sucesso!");
+    }
+
+    closeModal("modalService");
     afterPost?.();
   };
 
@@ -35,7 +49,7 @@ function ServiceForm({ afterPost }: { afterPost?: () => void }) {
 
   return (
     <div>
-      <Modal id={"modalClient"} buttonLabel={"Cadastrar"}>
+      <Modal id={"modalService"} buttonLabel={"Cadastrar"}>
         <h1>Cadastro de tipo de serviço</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control flex flex-col">

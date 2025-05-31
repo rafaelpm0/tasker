@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import type { TypeService } from "../../types/types";
 import { usePostTypeClientMutation } from "../../services/endpoints/tasker";
 import Modal, {closeModal} from "../ui/modal";
+import { showError, showSuccess } from "../ui/toast";
 
 
 
@@ -19,7 +20,15 @@ function TypeForm({ afterPost }: { afterPost?: () => void }) {
       ...data,
       hourRate: Number(data.hourRate) 
     };
-    await postTypeClient(newData);
+    const response = await postTypeClient(newData);
+    if (response.error) {
+      showError("Erro ao cadastrar tipo de serviço: " + response.error.data?.message || "Tente novamente mais tarde.");
+      return;
+    } else {
+      showSuccess("Tipo de serviço cadastrado com sucesso!");
+    }
+    
+     // Fechar o modal após o cadastro
     closeModal("modalTypeService")
     afterPost?.();
   };
