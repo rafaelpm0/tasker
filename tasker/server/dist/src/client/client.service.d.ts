@@ -6,45 +6,45 @@ export declare class ClientService {
     constructor(prisma: PrismaService);
     create(createClientDto: CreateClientDto): Promise<{
         id: number;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         email: string;
         phone: string;
         extra: string | null;
     }>;
     findAll(): Promise<{
         id: number;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         email: string;
         phone: string;
         extra: string | null;
     }[]>;
     findOne(id: number): Promise<{
         id: number;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         email: string;
         phone: string;
         extra: string | null;
     }>;
     update(id: number, updateClientDto: UpdateClientDto): Promise<{
         id: number;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         email: string;
         phone: string;
         extra: string | null;
     }>;
     remove(id: number): Promise<{
         id: number;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         email: string;
         phone: string;
         extra: string | null;

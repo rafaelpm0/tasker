@@ -6,45 +6,45 @@ export declare class ClientController {
     constructor(clientService: ClientService);
     create(createClientDto: CreateClientDto): Promise<{
         id: number;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         email: string;
         phone: string;
         extra: string | null;
     }>;
     findAll(): Promise<{
         id: number;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         email: string;
         phone: string;
         extra: string | null;
     }[]>;
     findOne(id: string): Promise<{
         id: number;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         email: string;
         phone: string;
         extra: string | null;
     }>;
     update(id: string, updateClientDto: UpdateClientDto): Promise<{
         id: number;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         email: string;
         phone: string;
         extra: string | null;
     }>;
     remove(id: string): Promise<{
         id: number;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         email: string;
         phone: string;
         extra: string | null;

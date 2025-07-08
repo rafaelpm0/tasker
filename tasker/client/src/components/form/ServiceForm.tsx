@@ -53,14 +53,16 @@ function ServiceForm({ afterPost }: { afterPost?: () => void }) {
         <h1>Cadastro de tipo de serviço</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control flex flex-col">
-            <label className="label">
+            <label className="label" htmlFor="type_serv_id">
               <span className="label-text">Tipo de serviço:</span>
             </label>
             <select
               id="type_serv_id"
               className="select select-bordered w-full max-w-xs"
               {...register("type_serv_id", { required: true })}
-            >
+              name="type_serv_id"
+              >
+            
               <option value="" disabled selected>
                 Selecione um tipo de serviço
               </option>
@@ -77,7 +79,7 @@ function ServiceForm({ afterPost }: { afterPost?: () => void }) {
               </span>
             )}
 
-            <label className="label">
+            <label className="label" htmlFor="client_id">
               <span className="label-text">Cliente:</span>
             </label>
             <select
@@ -101,27 +103,30 @@ function ServiceForm({ afterPost }: { afterPost?: () => void }) {
               </span>
             )}
 
-            <label className="label">
+            <label className="label" htmlFor="description">
               <span className="label-text">Descrição:</span>
             </label>
             <input
-              type="text"
-              placeholder="Escreva a descrição"
               className="input input-bordered"
-              {...register("description", { required: true })}
+              id="description"
+              name="description"
+              placeholder="Escreva a descrição"
+              type="text"
             />
             {errors.description && (
               <span className="label-text-alt text-error">
                 Descrição é obrigatória
               </span>
             )}
-              <label className="label">
+
+            <label className="label" htmlFor="qtn_min">
               <span className="label-text">Quantidade de horas:</span>
             </label>
             <input
-              type="number"
-              placeholder="Informe o numero de horas gastas"
               className="input input-bordered"
+              id="qtn_min"
+              placeholder="Informe o numero de horas gastas"
+              type="number"
               {...register("qtn_min", { required: true })}
             />
             {errors.qtn_min && (
@@ -130,7 +135,7 @@ function ServiceForm({ afterPost }: { afterPost?: () => void }) {
               </span>
             )}
           </div>
-          <button type="submit" className="btn btn-primary mt-4">
+          <button name="enviar" type="submit" className="btn btn-primary mt-4">
             Enviar
           </button>
         </form>
