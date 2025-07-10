@@ -109,9 +109,9 @@ function ServiceForm({ afterPost }: { afterPost?: () => void }) {
             <input
               className="input input-bordered"
               id="description"
-              name="description"
               placeholder="Escreva a descrição"
               type="text"
+              {...register("description", { required: true })}
             />
             {errors.description && (
               <span className="label-text-alt text-error">

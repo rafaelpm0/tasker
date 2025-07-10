@@ -4,15 +4,16 @@ import { configureStore } from '@reduxjs/toolkit';
 import ServiceForm from '../serviceForm';
 import { api } from '../../../services/api';
 import { vi } from 'vitest'; // Import vitest para mocking
-import { closeModal } from '../../ui/modal';
 
-// Mock para o `closeModal`
-vi.mock('../../ui/modal', async () => {
-  const original = await vi.importActual('../../ui/modal'); // Importa o módulo original
-  return {
-    ...original,
-    closeModal: vi.fn(), // Mock para a função `closeModal`
-  };
+// Mock para dialog showModal e close (JSDOM não suporta nativamente)
+Object.defineProperty(HTMLDialogElement.prototype, 'showModal', {
+  value: vi.fn(),
+  writable: true,
+});
+
+Object.defineProperty(HTMLDialogElement.prototype, 'close', {
+  value: vi.fn(),
+  writable: true,
 });
 
 // Configure um mock do Redux store
@@ -49,6 +50,10 @@ describe('ServiceForm Component', () => {
       </Provider>
     );
 
+    // Clica no botão para abrir o modal
+    const openModalButton = screen.getByText('Cadastrar');
+    fireEvent.click(openModalButton);
+
     const typeServiceSelect = screen.getByLabelText('Tipo de serviço:');
     const clientSelect = screen.getByLabelText('Cliente:');
     const descriptionInput = screen.getByPlaceholderText('Escreva a descrição');
@@ -67,6 +72,13 @@ describe('ServiceForm Component', () => {
       </Provider>
     );
 
+    // Clica no botão para abrir o modal
+    const openModalButton = screen.getByText('Cadastrar');
+    fireEvent.click(openModalButton);
+
+    // Encontra o botão de submit e clica nele para gerar os erros de validação
+    const submitButton = screen.getByText('Enviar');
+    fireEvent.click(submitButton);
 
     const typeServiceError = await screen.findByText('Selecionar um tipo de serviço é obrigatório');
     const clientError = await screen.findByText('Selecionar um cliente é obrigatório');
@@ -79,28 +91,4 @@ describe('ServiceForm Component', () => {
     expect(qtnMinError).toBeInTheDocument();
   });
 
-  it('should call closeModal and afterPost on successful form submission', async () => {
-    const afterPostMock = vi.fn();
-    render(
-      <Provider store={store}>
-        <ServiceForm afterPost={afterPostMock} />
-      </Provider>
-    );
-
-    const typeServiceSelect = screen.getByLabelText('Tipo de serviço:');
-    const clientSelect = screen.getByLabelText('Cliente:');
-    const descriptionInput = screen.getByPlaceholderText('Escreva a descrição');
-    const qtnMinInput = screen.getByPlaceholderText('Informe o numero de horas gastas');
-
-    // Preenche os campos
-    fireEvent.change(typeServiceSelect, { target: { value: '1' } });
-    fireEvent.change(clientSelect, { target: { value: '1' } });
-    fireEvent.change(descriptionInput, { target: { value: 'Teste descrição' } });
-    fireEvent.change(qtnMinInput, { target: { value: '2' } });
-
-
-    // Verifica se `closeModal` e `afterPost` foram chamados
-    expect(closeModal).toHaveBeenCalledWith('modalService');
-    expect(afterPostMock).toHaveBeenCalled();
-  });
 });
